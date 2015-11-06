@@ -3,7 +3,7 @@ __author__ = 'dangoodburn'
 from flask import Flask, jsonify, render_template, request
 import requests
 import json
-app = Flask(__name__)
+application = Flask(__name__)
 
 VarKey = "AIzaSyAMngV44Qd0ka-ROJtN2TCuKKQdwh9UUFM"
 
@@ -112,7 +112,7 @@ def flightsapicall(city, startdate, enddate):
 
 
 
-@app.route('/sites')
+@application.route('/sites')
 def sites():
 
     city = request.args.get('city', 0, type=str)
@@ -131,13 +131,13 @@ def sites():
 
 
 
-@app.route('/')
+@application.route('/')
 def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run()
+    application.debug = True
+    application.run()
 
 
 
