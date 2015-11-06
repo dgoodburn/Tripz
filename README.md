@@ -1,6 +1,6 @@
 # Tripz
 
-
+![Alt text](https://github.com/dgoodburn/Tripz/blob/master/Screen shot.png "Demo")
 
 $ virtualenv Tripz
 $ source Tripz/bin/activate
