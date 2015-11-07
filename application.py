@@ -31,7 +31,6 @@ def landmarkapicall(code, detail):
     TxtHTML = "https://maps.googleapis.com/maps/api/place/" + HTML + "/json?"
     TxtKey = "&key="
 
-    print VarCode
     address = ""
     address += TxtHTML
     address += TxtCode
@@ -40,7 +39,7 @@ def landmarkapicall(code, detail):
     address += VarTypes
     address += TxtKey
     address += VarKey
-    print address
+
     return requests.get(address).json()
 
 
@@ -59,7 +58,6 @@ def returnAirportCode(city):
 def flightsapicall(city, startdate, enddate):
 
     airportCode = returnAirportCode(city)
-    print airportCode
 
     url = "https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyAMngV44Qd0ka-ROJtN2TCuKKQdwh9UUFM"
     headers = {'content-type': 'application/json'}

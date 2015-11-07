@@ -16,7 +16,7 @@
   limitations under the License
 -->
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
@@ -40,9 +40,9 @@
     <link rel="shortcut icon" href="../static/images/favicon.png">
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://www.google.com/jsapi"
-        type="text/javascript"></script>
+            type="text/javascript"></script>
 
-      <script type=text/javascript>
+    <script type=text/javascript>
         $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
     </script>
     <script src="../static/main.js"></script>
@@ -52,36 +52,66 @@
     <link rel="canonical" href="http://www.example.com/">
     -->
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"
+          rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="../static/material.min.css">
     <link rel="stylesheet" href="../static/styles.css">
-      <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
 
-  </head>
-  <body>
-    <div class="demo-blog mdl-layout mdl-js-layout has-drawer is-upgraded">
-      <main class="mdl-layout__content">
+</head>
+<body>
+<div class="demo-blog mdl-layout mdl-js-layout has-drawer is-upgraded">
+    <main class="mdl-layout__content">
         <div class="demo-blog__posts mdl-grid">
-          <div class="mdl-card coffee-pic mdl-cell mdl-cell--8-col" style="padding: 16px; background-image: url('http://www.clipartlord.com/wp-content/uploads/2013/09/airplane9.png'); background-size: cover;">
-                <input type="text" id="location" name="location" placeholder="Location" style="font-family: Roboto; font-size: 12px"><br>
-                <input type="text" id="startdate" name="startdate" placeholder="Start Date" style="font-family: Roboto; font-size: 12px"><br>
-                <input type="text" id="enddate" name="enddate" placeholder="End Date" style="font-family: Roboto; font-size: 12px"><br>
+            <div class="mdl-card coffee-pic mdl-cell mdl-cell--8-col"
+                 style="padding: 16px; clear-after: both; background-size: cover;">
+                <div >
+                    <form action="#">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="origin">
+                            <label class="mdl-textfield__label" for="sample3">Origin</label>
+                        </div>
+                    </form>
+                    <form action="#">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="location">
+                            <label class="mdl-textfield__label" for="sample3">Destination</label>
+                        </div>
+                    </form>
+                    <form action="#">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="startdate">
+                            <label class="mdl-textfield__label" for="sample3">Departure Date "YYYY-MM-DD"</label>
+                        </div>
+                    </form>
+                    <form action="#">
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                            <input class="mdl-textfield__input" type="text" id="enddate">
+                            <label class="mdl-textfield__label" for="sample3">Return Date "YYYY-MM-DD"</label>
+                        </div>
+                    </form>
+                </div>
+
                 <button id="SubmitButton"
-                        class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
-                        value=1
-                        style="display: inline-block; background-color: #546E7A; color: rgba(255, 255, 255, 0.56)">
-                    <i class="material-icons" style="display: table-cell;">add</i>
+                        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                    Submit
                 </button>
-              <div id="flight" style="border:2px solid !important; border-color: grey; background-color: white; padding: 16px; font-family: Roboto; font-size: 12px"></div>
+                <div id="loader" class="mdl-progress mdl-js-progress mdl-progress__indeterminate" style="display: none; width: 100%"></div>
 
-          </div>
+
+            </div>
+            <div id=flight2 class="mdl-card coffee-pic mdl-cell mdl-cell--8-col"
+                 style="padding: 16px; background-size: cover; display: none;">
+            <div id="flight"></div>
         </div>
-      </main>
-      <div class="mdl-layout__obfuscator"></div>
-    </div>
-    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+</div>
+</div>
+</main>
+<div class="mdl-layout__obfuscator"></div>
+</div>
+<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
 
-  </body>
+</body>
 
 </html>
