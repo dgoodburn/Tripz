@@ -2,7 +2,7 @@
 
 ![Alt text](https://github.com/dgoodburn/Tripz/blob/master/Screenshot.png "Demo")
 
-TRIPZ is a very basic app that, with a destination and start and end dates, will generate a set of flights and a list of landmarks to see at your destination. (the origin is set to fly from Seattle)
+TRIPZ is a very basic app that, with an origin, destination and start and end dates, will generate a set of flights and a list of landmarks to see at your destination.
 
 ---
 
