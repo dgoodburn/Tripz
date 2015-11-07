@@ -75,10 +75,10 @@ function outputFlightData(flightdiv, data) {
 function outputSiteData(flightdiv, data) {
 
     try {
-        flightdiv.append("<div class=flight1><span class=titleblue>Things to see:</span></div>");
+        flightdiv.append("<div class=site1><span class=titleblue>Things to see:</span></div>");
         for (var i = 0; i < data.site.length; i++) {
             if (i > 10) { break; }
-            flightdiv.append("<div class=flight1 title>" + data.site[i] + "</div>");
+            flightdiv.append("<div class=site1 title>" + data.site[i] + "</div>");
         }
     }
     catch(err) {
