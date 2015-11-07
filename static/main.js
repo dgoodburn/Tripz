@@ -92,7 +92,7 @@ function outputSiteData(flightdiv, data) {
 function outputHotelData(flightdiv, data) {
 
     try {
-        flightdiv.append("</br><div class=site1><span class=titleblue>Hotel:</span></div>");
+        flightdiv.append("</br><div class=site2><span class=titleblue>Hotel:</span></div>");
         flightdiv.append("<div class=site2 title>" + data.site[2].results[0].name + "</div>");
 
     }
@@ -105,7 +105,7 @@ function outputHotelData(flightdiv, data) {
 function outputRestaurantData(flightdiv, data) {
 
     try {
-        flightdiv.append("</br><div class=site1><span class=titleblue>Restaurants:</span></div>");
+        flightdiv.append("</br><div class=site3><span class=titleblue>Restaurants:</span></div>");
         for (var i = 0; i < data.site[2].results.length; i++) {
             if (i > 10) { break; }
             flightdiv.append("<div class=site3 title>" + data.site[1].results[i].name + "</div>");
