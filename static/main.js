@@ -44,9 +44,11 @@ function button() {
             $('#loader').css('display','none');
             $('#SubmitButton').css('display','inline');
 
-            // print results on screen
+            // output results on screen
             outputFlightData(flightdiv, data);
             outputSiteData(flightdiv, data);
+            outputHotelData(flightdiv, data);
+            outputRestaurantData(flightdiv, data);
 
         });
     }
@@ -76,13 +78,41 @@ function outputSiteData(flightdiv, data) {
 
     try {
         flightdiv.append("<div class=site1><span class=titleblue>Things to see:</span></div>");
-        for (var i = 0; i < data.site.length; i++) {
+        for (var i = 0; i < data.site[0].length; i++) {
             if (i > 10) { break; }
-            flightdiv.append("<div class=site1 title>" + data.site[i] + "</div>");
+            flightdiv.append("<div class=site1 title>" + data.site[0][i] + "</div>");
         }
     }
     catch(err) {
         message = "Unable to find sightseeing details. Please try again.";
+        createAlert(message);
+    }
+}
+
+function outputHotelData(flightdiv, data) {
+
+    try {
+        flightdiv.append("</br><div class=site1><span class=titleblue>Hotel:</span></div>");
+        flightdiv.append("<div class=site2 title>" + data.site[2].results[0].name + "</div>");
+
+    }
+    catch(err) {
+        message = "Unable to find hotel details. Please try again.";
+        createAlert(message);
+    }
+}
+
+function outputRestaurantData(flightdiv, data) {
+
+    try {
+        flightdiv.append("</br><div class=site1><span class=titleblue>Restaurants:</span></div>");
+        for (var i = 0; i < data.site[2].results.length; i++) {
+            if (i > 10) { break; }
+            flightdiv.append("<div class=site3 title>" + data.site[1].results[i].name + "</div>");
+        }
+    }
+    catch(err) {
+        message = "Unable to find restaurant details. Please try again.";
         createAlert(message);
     }
 }
