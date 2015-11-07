@@ -20,18 +20,18 @@ function button() {
         $('#loader').css('display','none');
         $('#SubmitButton').css('display','inline');
 
-        $('#flight').append("<div class=flight1><span class=title>FLIGHT #1:</span></br></br>" + data.flight[0].trips.data.carrier[0].name + "</div>");
-        $('#flight').append("<div class=flight1>" + data.flight[0].trips.tripOption[0].slice[0].duration  + " minutes</div>");
-        $('#flight').append("<div class=flight1>" + data.flight[0].trips.tripOption[0].saleTotal + "</div></br></br>");
+        $('#flight').append("<div class=flight1><span class=titleblue>Flight #1:</span>" + data.flight[0].trips.data.carrier[0].name + "</div>");
+        $('#flight').append("<div class=flight1 title>" + data.flight[0].trips.tripOption[0].slice[0].duration  + " minutes</div>");
+        $('#flight').append("<div class=flight1 title>" + data.flight[0].trips.tripOption[0].saleTotal + "</div></br>");
 
-        $('#flight').append("<div class=flight1><span class=title>FLIGHT #2:</span></br></br>" + data.flight[1].trips.data.carrier[0].name + "</div>");
-        $('#flight').append("<div class=flight1>" + data.flight[1].trips.tripOption[0].slice[0].duration  + " minutes</div>");
-        $('#flight').append("<div class=flight1>" + data.flight[1].trips.tripOption[0].saleTotal + "</div></br></br>");
+        $('#flight').append("<div class=flight1><span class=titleblue>Flight #2:</span>" + data.flight[1].trips.data.carrier[0].name + "</div>");
+        $('#flight').append("<div class=flight1 title>" + data.flight[1].trips.tripOption[0].slice[0].duration  + " minutes</div>");
+        $('#flight').append("<div class=flight1 title>" + data.flight[1].trips.tripOption[0].saleTotal + "</div></br>");
 
-        $('#flight').append("<div class=flight1><span class=title>THINGS TO SEE:</span></div></br></br>");
+        $('#flight').append("<div class=flight1><span class=titleblue>Things to see:</span></div>");
         for (var i = 0; i < data.site.length; i++) {
             if (i > 10) { break; }
-            $('#flight').append("<div class=flight1>" + data.site[i] + "</div>");
+            $('#flight').append("<div class=flight1 title>" + data.site[i] + "</div>");
         }
 
     });
