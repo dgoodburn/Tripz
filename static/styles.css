@@ -571,7 +571,15 @@ body .demo-blog {
     background-color: white;
     padding: 16px;
 
+
 }
+
+.flight1:nth-of-type(3), .flight1:nth-of-type(6), .flight1:last-child{
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    width: 300px;
+}
+
+
 
 .flight3 {
     position: relative;
@@ -618,4 +626,22 @@ body .demo-blog {
     text-align: left;
     font-weight: normal;
     font-family: BlinkMacSystemFont;
+}
+
+
+.alert-danger {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    border-top-color: rgb(235, 204, 209);
+    border-right-color: rgb(235, 204, 209);
+    border-bottom-color: rgb(235, 204, 209);
+    border-left-color: rgb(235, 204, 209);
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }

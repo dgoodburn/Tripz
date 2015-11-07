@@ -10,30 +10,104 @@ $(document).ready(function() {
 
 function button() {
 
-    $('#flight').empty();
+    // remove alert if necessary
+    $('.alert').remove();
+
+    // retrieve inputs from form
+    var origin = $('#origin').val();
+    var destination = $('#destination').val();
+    var startdate = $('#startdate').val();
+    var enddate = $('#enddate').val();
+    var flightdiv = $('#flight');
+
+    // remove any current results if necessary
+    flightdiv.empty();
     $('#flight2').css('display','none');
-    $('#SubmitButton').css('display','none');
-    $('#loader').css('display','inline');
 
-    $.getJSON($SCRIPT_ROOT + '/sites', { city: $('#location').val(), startdate: $('#startdate').val(), enddate: $('#enddate').val() }, function (data) {
-        $('#flight2').css('display','inline');
-        $('#loader').css('display','none');
-        $('#SubmitButton').css('display','inline');
+    // check if all inputs are valid
+    var errormessage = formValidation(origin, destination, startdate, enddate);
 
-        $('#flight').append("<div class=flight1><span class=titleblue>Flight #1:</span>" + data.flight[0].trips.data.carrier[0].name + "</div>");
-        $('#flight').append("<div class=flight1 title>" + data.flight[0].trips.tripOption[0].slice[0].duration  + " minutes</div>");
-        $('#flight').append("<div class=flight1 title>" + data.flight[0].trips.tripOption[0].saleTotal + "</div></br>");
+    if (errormessage === null) {
+        $('#SubmitButton').css('display','none');
+        $('#loader').css('display','inline');
 
-        $('#flight').append("<div class=flight1><span class=titleblue>Flight #2:</span>" + data.flight[1].trips.data.carrier[0].name + "</div>");
-        $('#flight').append("<div class=flight1 title>" + data.flight[1].trips.tripOption[0].slice[0].duration  + " minutes</div>");
-        $('#flight').append("<div class=flight1 title>" + data.flight[1].trips.tripOption[0].saleTotal + "</div></br>");
+        $.getJSON($SCRIPT_ROOT + '/sites', {
 
-        $('#flight').append("<div class=flight1><span class=titleblue>Things to see:</span></div>");
+            origin: origin,
+            destination: destination,
+            startdate: startdate,
+            enddate: enddate
+
+        }, function (data) {
+
+            $('#flight2').css('display','inline');
+            $('#loader').css('display','none');
+            $('#SubmitButton').css('display','inline');
+
+            // print results on screen
+            outputFlightData(flightdiv, data);
+            outputSiteData(flightdiv, data);
+
+        });
+    }
+
+}
+
+
+function outputFlightData(flightdiv, data) {
+
+    try {
+        flightdiv.append("<div class=flight1><span class=titleblue>Flight #1:</span>" + data.flight[0].trips.data.carrier[0].name + "</div>");
+        flightdiv.append("<div class=flight1 title>" + data.flight[0].trips.tripOption[0].slice[0].duration  + " minutes</div>");
+        flightdiv.append("<div class=flight1 title>" + data.flight[0].trips.tripOption[0].saleTotal + "</div></br>");
+
+        flightdiv.append("<div class=flight1><span class=titleblue>Flight #2:</span>" + data.flight[1].trips.data.carrier[0].name + "</div>");
+        flightdiv.append("<div class=flight1 title>" + data.flight[1].trips.tripOption[0].slice[0].duration  + " minutes</div>");
+        flightdiv.append("<div class=flight1 title>" + data.flight[1].trips.tripOption[0].saleTotal + "</div></br>");
+    }
+    catch(err) {
+        message = "Unable to find flight. Please try again.";
+        createAlert(message);
+    }
+
+}
+
+function outputSiteData(flightdiv, data) {
+
+    try {
+        flightdiv.append("<div class=flight1><span class=titleblue>Things to see:</span></div>");
         for (var i = 0; i < data.site.length; i++) {
             if (i > 10) { break; }
-            $('#flight').append("<div class=flight1 title>" + data.site[i] + "</div>");
+            flightdiv.append("<div class=flight1 title>" + data.site[i] + "</div>");
         }
+    }
+    catch(err) {
+        message = "Unable to find sightseeing details. Please try again.";
+        createAlert(message);
+    }
+}
 
-    });
+
+function formValidation(origin, destination, startdate, enddate) {
+// checks that form inputs are valid
+
+    message = null;
+
+    new Date(startdate).toString() === "Invalid Date" ? message = 'Sorry. Date format is incorrect. "YYYY-MM-DD"' : void(0);
+    new Date(enddate).toString() === "Invalid Date" ? message = 'Sorry. Date format is incorrect. "YYYY-MM-DD"' : void(0);
+
+    destination === "" ? message = "Destination not found." : void(0);
+    origin === "" ? message = "Origin not found." : void(0);
+
+    message === null ? void(0) : createAlert(message);
+    return message
+}
+
+
+function createAlert(message) {
+// creates message upon error
+
+    $('.alert').remove();
+    $('.mdl-card:first-child').append('<div class="alert alert-danger" role="alert">' + message + '</div>');
 
 }

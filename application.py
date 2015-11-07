@@ -5,38 +5,81 @@ import requests
 import json
 application = Flask(__name__)
 
-VarKey = "AIzaSyAMngV44Qd0ka-ROJtN2TCuKKQdwh9UUFM"
+VarKey = "AIzaSyAMngV44Qd0ka-ROJtN2TCuKKQdwh9UUFM"  # google api key
+
+
+@application.route('/')
+def index():
+    ### return initial HTML
+
+    return render_template('index.html')
+
+
+@application.route('/sites')
+def sites():
+    ### called after validated push of submit button. returns list of sites and flight information
+
+    origin = request.args.get('origin', 0, type=str)
+    destination = request.args.get('destination', 0, type=str)
+    startdate = request.args.get('startdate', 0, type=str)
+    enddate = request.args.get('enddate', 0, type=str)
+
+    listofsites = returnlistofsites(destination)
+    flights=flightsapicall(origin, destination, startdate, enddate)
+
+    return jsonify(site=listofsites, flight=flights)
+
+
+def returnlistofsites(city):
+
+    var = landmarkapicall(1, city)['predictions'][0]['place_id']
+    var = landmarkapicall(2, var)['result']['geometry']['location']
+    var = str(var['lat']) + "," + str(var['lng'])
+    var = landmarkapicall(3, var)
+    listofsites = []
+    for i in range(len(var)):
+        listofsites.append(var['results'][i]['name'])
+
+    return listofsites
+
 
 def landmarkapicall(code, detail):
+    ### run three times. 1) Use City name to get place ID. 2) Use Place ID to get X,Y location. 3) Use location to get landmarks
 
     if code == 1:
-        HTML = "autocomplete"
-        TxtCode = "input="
-        VarCode = detail
-        TxtTypes = "&types="
-        VarTypes = "geocode"
+        addressvariables = {
+            "HTML" : "autocomplete",
+            "TxtCode" : "input=",
+            "VarCode" : detail,
+            "TxtTypes" : "&types=",
+            "VarTypes" : "geocode"
+        }
     elif code == 2:
-        HTML = "details"
-        TxtCode = "placeid="
-        VarCode = detail
-        TxtTypes = ""
-        VarTypes = ""
+        addressvariables = {
+            "HTML" : "details",
+            "TxtCode" : "placeid=",
+            "VarCode" : detail,
+            "TxtTypes" : "",
+            "VarTypes" : ""
+        }
     else:
-        HTML = "nearbysearch"
-        TxtCode = "location="
-        VarCode = detail
-        TxtTypes = "&radius=3000&types="
-        VarTypes = ""
+         addressvariables = {
+            "HTML" : "nearbysearch",
+            "TxtCode" : "location=",
+            "VarCode" : detail,
+            "TxtTypes" : "&radius=3000&types=",
+            "VarTypes" : ""
+        }
 
-    TxtHTML = "https://maps.googleapis.com/maps/api/place/" + HTML + "/json?"
+    TxtHTML = "https://maps.googleapis.com/maps/api/place/" + addressvariables['HTML'] + "/json?"
     TxtKey = "&key="
 
     address = ""
     address += TxtHTML
-    address += TxtCode
-    address += VarCode
-    address += TxtTypes
-    address += VarTypes
+    address += addressvariables['TxtCode']
+    address += addressvariables['VarCode']
+    address += addressvariables['TxtTypes']
+    address += addressvariables['VarTypes']
     address += TxtKey
     address += VarKey
 
@@ -44,6 +87,7 @@ def landmarkapicall(code, detail):
 
 
 def returnAirportCode(city):
+    ### return airport code given city name
 
     apikey = "03107a4ad71079da436cb5f55457f578"
 
@@ -55,9 +99,12 @@ def returnAirportCode(city):
     return r[r.find("code")+7:r.find("code")+10]
 
 
-def flightsapicall(city, startdate, enddate):
+def flightsapicall(origin, destination, startdate, enddate):
+    ### returns flight information for departure and return
 
-    airportCode = returnAirportCode(city)
+    ### get origin and destination airport codes
+    originAirportCode = returnAirportCode(origin)
+    destinationAirportCode = returnAirportCode(destination)
 
     url = "https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyAMngV44Qd0ka-ROJtN2TCuKKQdwh9UUFM"
     headers = {'content-type': 'application/json'}
@@ -66,8 +113,8 @@ def flightsapicall(city, startdate, enddate):
       "request": {
         "slice": [
           {
-            "origin": "SEA",
-            "destination": airportCode,
+            "origin": originAirportCode,
+            "destination": destinationAirportCode,
             "date": startdate  # "2015-11-18"
           }
         ],
@@ -84,61 +131,17 @@ def flightsapicall(city, startdate, enddate):
     }
     r1 = requests.post(url, headers=headers, data=json.dumps(params)).json()
 
-    params = {
-      "request": {
-        "slice": [
-          {
-            "origin": airportCode,
-            "destination": "SEA",
-            "date": enddate  # "2015-11-18"
-          }
-        ],
-        "passengers": {
-          "adultCount": 1,
-          "infantInLapCount": 0,
-          "infantInSeatCount": 0,
-          "childCount": 0,
-          "seniorCount": 0
-        },
-        "solutions": 1,
-        "refundable": False
-      }
-    }
+    ### change variables for second flight
+    params['request']['slice'][0]['origin'] = destinationAirportCode
+    params['request']['slice'][0]['destination'] = originAirportCode
+    params['request']['slice'][0]['date'] = enddate
+
     r2 = requests.post(url, headers=headers, data=json.dumps(params)).json()
+
     return [r1, r2]
 
 
 
-
-@application.route('/sites')
-def sites():
-
-    city = request.args.get('city', 0, type=str)
-    startdate = request.args.get('startdate', 0, type=str)
-    enddate = request.args.get('enddate', 0, type=str)
-
-    var = landmarkapicall(1, city)['predictions'][0]['place_id']
-    var = landmarkapicall(2, var)['result']['geometry']['location']
-    var = str(var['lat']) + "," + str(var['lng'])
-    var = landmarkapicall(3, var)
-    listofsites = []
-    for i in range(len(var)):
-        listofsites.append(var['results'][i]['name'])
-
-    return jsonify(site=listofsites, flight=flightsapicall(city, startdate, enddate))
-
-
-
-@application.route('/')
-def index():
-    return render_template('index.html')
-
 if __name__ == '__main__':
     application.debug = False
     application.run()
-
-
-
-
-
-
