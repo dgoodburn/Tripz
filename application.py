@@ -4,16 +4,11 @@ from flask import Flask, jsonify, render_template, request
 from dateutil import parser
 import requests
 import json
-import instance
-import os
+
 application = Flask(__name__)
 
-try:
-    VarKey = os.environ['GoogleAPIKey']
-    apikey = os.environ['AirportAPIKey']
-except:
-    VarKey = instance.returngoogleAPIkey()  # google api key
-    apikey = instance.returnairportAPIkey()  # airport api key
+VarKey = 'AIzaSyAMngV44Qd0ka-ROJtN2TCuKKQdwh9UUFM'  # google api key
+apikey = '03107a4ad71079da436cb5f55457f578'  # airport api key
 
 
 
