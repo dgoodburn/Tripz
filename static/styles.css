@@ -632,6 +632,7 @@ body .demo-blog {
     text-align: left;
     font-weight: normal;
     font-family: BlinkMacSystemFont;
+    clear: both;
 
 }
 
@@ -694,4 +695,12 @@ body .demo-blog {
     display: none;
     width: 100%;
 
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
 }

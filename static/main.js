@@ -87,13 +87,10 @@ function outputFlightData(flightdiv, data) {
 
             currentdiv.append("\
                     <div class='flight1'><span class=titleblue>Flight #" + (i+1) + ":</div>\
-                    <div class='flight1 title'>" + carrier + "</div>\
-                    <div class='flight1 title'>" + flightnum + "</div>\
-                    <div class='flight1 title'>" + duration  + " minutes</div>\
-                    <div class='flight1 title'>Depart: " + departureAirport + " " + departureTime + "</div>\
-                    <div class='flight1 title'>Arrive: " + arrivalAirport + " " + arrivalTime + "</div>\
-                    <div class='flight1 title'>" + totalCost + "</div>\
-                    <div class='flight1 title'>Layovers: " + layovers + "</div>"
+                    <div class='flight1 title'><span class=left>" + carrier + "</span><span class=right>Depart: " + departureAirport + " " + departureTime + "</span></div>\
+                    <div class='flight1 title'><span class=left>" + flightnum + "</span><span class=right>Arrive: " + arrivalAirport + " " + arrivalTime + "</span></div>\
+                    <div class='flight1 title'><span class=left> </span><span class=right>" + duration  + " minutes</span></div>\
+                    <div class='flight1 title'><span class=left>" + totalCost + "</span><span class=right>Layovers: " + layovers  + "</span></div>"
             );
         }
     }

@@ -2,7 +2,6 @@ __author__ = 'dangoodburn'
 
 from flask import Flask, jsonify, render_template, request
 from dateutil import parser
-import time
 import requests
 import json
 import instance
