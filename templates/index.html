@@ -21,7 +21,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Material Design Lite</title>
+    <title>Tripz</title>
 
     <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
@@ -59,9 +59,9 @@
 <div class="demo-blog mdl-layout mdl-js-layout has-drawer is-upgraded">
     <main class="mdl-layout__content">
         <div class="demo-blog__posts mdl-grid">
-            <div class="mdl-card coffee-pic mdl-cell mdl-cell--8-col"
-                 style="padding: 32px; clear-after: both; background-size: cover;">
-                <div >
+            <div class="mdl-card coffee-pic mdl-cell mdl-cell--4-col"
+                 style="padding: 32px; min-height: 408px">
+                <div>
                     <form action="#">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input" type="text" id="origin">
@@ -86,24 +86,49 @@
                             <label class="mdl-textfield__label" for="sample3">Return Date "YYYY-MM-DD"</label>
                         </div>
                     </form>
+                    </br>
                 </div>
 
                 <button id="SubmitButton"
                         class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
                     Submit
                 </button>
-                <div id="loader" class="mdl-progress mdl-js-progress mdl-progress__indeterminate" style="display: none; width: 100%"></div>
+                <div id="loader" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
                 </br>
 
             </div>
-            <div id=flight2 class="mdl-card coffee-pic mdl-cell mdl-cell--8-col"
-                 style="padding: 16px; background-size: cover; display: none;">
-            <div id="flight"></div>
+            <div id=combinedFlight
+                 class="mdl-card coffee-pic mdl-cell mdl-cell--8-col mdl-cell--4-col-phone mdl-cell--4-col-tablet">
+                <div id=flight2 class="mdl-card coffee-pic mdl-cell mdl-cell--12-col">
+                    <div id="flight"></div>
+
+                </div>
+                <div id=blank class="mdl-card coffee-pic mdl-cell mdl-cell--12-col"></div>
+                <div id=flight3 class="mdl-card coffee-pic mdl-cell mdl-cell--12-col">
+                    <div id="flightnum2"></div>
+
+                </div>
+            </div>
         </div>
-</div>
-</div>
-</main>
-<div class="mdl-layout__obfuscator"></div>
+
+        <div class="demo-blog__posts mdl-grid">
+            <div id=combined
+                 class="mdl-card coffee-pic mdl-cell mdl-cell--6-col mdl-cell--4-col-phone mdl-cell--4-col-tablet">
+                <div id=hotel1 class="mdl-card coffee-pic mdl-cell mdl-cell--12-col">
+                    <div id="hotel"></div>
+                </div>
+                <div id=blank class="mdl-card coffee-pic mdl-cell mdl-cell--12-col"></div>
+                <div id=things1 class="mdl-card coffee-pic mdl-cell mdl-cell--12-col">
+                    <div id="things"></div>
+                </div>
+            </div>
+            <div id=restaurants1
+                 class="mdl-card coffee-pic mdl-cell mdl-cell--6-col mdl-cell--4-col-phone mdl-cell--4-col-tablet">
+                <div id="restaurants"></div>
+            </div>
+        </div>
+    </main>
+    <div class="mdl-layout__obfuscator"></div>
 </div>
 <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
 

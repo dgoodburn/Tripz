@@ -1,11 +1,15 @@
 __author__ = 'dangoodburn'
 
 from flask import Flask, jsonify, render_template, request
+from dateutil import parser
+import time
 import requests
 import json
+import instance
 application = Flask(__name__)
 
-VarKey = "AIzaSyAMngV44Qd0ka-ROJtN2TCuKKQdwh9UUFM"  # google api key
+VarKey = instance.returngoogleAPIkey()  # google api key
+apikey = instance.returnairportAPIkey()  # airport api key
 
 
 @application.route('/')
@@ -24,6 +28,8 @@ def sites():
     startdate = request.args.get('startdate', 0, type=str)
     enddate = request.args.get('enddate', 0, type=str)
 
+    startdate = dateformatter(startdate)
+    enddate = dateformatter(enddate)
     listofsites = returnlistofsites(destination)
     flights=flightsapicall(origin, destination, startdate, enddate)
 
@@ -107,7 +113,6 @@ def landmarkapicall(code, detail):
 def returnAirportCode(city):
     ### return airport code given city name
 
-    apikey = "03107a4ad71079da436cb5f55457f578"
 
     url = "https://airport.api.aero/airport/match/" + city + "?user_key="
     url = url + apikey
@@ -185,6 +190,11 @@ def flightsapicall(origin, destination, startdate, enddate):
 
                 return [r1, r2]
 
+
+def dateformatter(date):
+
+    dt = parser.parse(date)
+    return dt.strftime("%Y-%m-%d")
 
 
 if __name__ == '__main__':

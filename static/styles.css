@@ -71,7 +71,7 @@ body .demo-blog {
   -webkit-align-items: stretch;
       -ms-flex-align: stretch;
           align-items: stretch;
-  min-height: 360px;
+  /*min-height: 360px;*/
 }
 .demo-blog .mdl-card__title {
   padding: 16px;
@@ -566,17 +566,40 @@ body .demo-blog {
   box-sizing: border-box;
 }
 
-#flight {
+#flight, #flightnum2 {
 
-    background-color: white;
-    padding: 16px;
-
+    padding: 32px;
+    display: block;
 
 }
 
-.flight1:nth-of-type(3), .flight1:nth-of-type(6), .site1:last-child, .site2:last-child, .site3:last-child{
-    border-bottom: 1px solid rgba(0,0,0,.12);
-    width: 300px;
+#hotel1, #things1 {
+
+    padding: 32px;
+    display: block;
+    min-height: 16px;
+    margin: 0;
+    width: 100%;
+
+}
+
+#restaurants1 {
+
+    padding: 32px;
+    display: none;
+    min-height: 16px;
+    margin: 8px;
+
+}
+
+#flight2, #flight3 {
+
+    display: block;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+
 }
 
 
@@ -594,19 +617,18 @@ body .demo-blog {
 
 .title {
 
-    font-size: 12px;
+    font-size: 16px;
     top: 4px;
     visibility: visible;
     bottom: 0;
-    color: rgba(0,0,0,.26);
+    color: rgba(0,0,0,.87);
     left: 0;
     right: 0;
     pointer-events: none;
-    position: absolute;
     display: block;
     width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
+    overflow: inherit;
+    white-space: normal;
     text-align: left;
     font-weight: normal;
     font-family: BlinkMacSystemFont;
@@ -618,7 +640,7 @@ body .demo-blog {
     font-size: 12px;
     top: 4px;
     visibility: visible;
-    color: rgba(0,0,0,.26);
+    color: rgba(0,0,0,.87);
     pointer-events: none;
     display: block;
     width: 100%;
@@ -644,4 +666,32 @@ body .demo-blog {
     margin-bottom: 20px;
     border: 1px solid transparent;
     border-radius: 4px;
+}
+
+.mdl-card {
+    background-color: rgba(255,255,255,0.7) !important;
+}
+
+#combined, #combinedFlight {
+
+    display: none;
+    background-color: transparent !important;
+    margin: 8px;
+
+}
+
+#blank {
+
+    min-height: 16px;
+    margin: 0;
+    width: 100%;
+    background-color: transparent !important;
+
+}
+
+#loader {
+
+    display: none;
+    width: 100%;
+
 }

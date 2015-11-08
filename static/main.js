@@ -40,15 +40,22 @@ function button() {
 
         }, function (data) {
 
-            $('#flight2').css('display','inline');
+            $('#flight2').css('display','block');
+            $('#flight3').css('display','block');
+
+            $('#combined').css('display','inline');
+            $('#restaurants1').css('display','block');
             $('#loader').css('display','none');
             $('#SubmitButton').css('display','inline');
 
             // output results on screen
             outputFlightData(flightdiv, data);
-            outputSiteData(flightdiv, data);
+            outputSiteData(data);
             outputHotelData(flightdiv, data);
             outputRestaurantData(flightdiv, data);
+
+            adjustdivheight();
+
 
         });
     }
@@ -58,14 +65,37 @@ function button() {
 
 function outputFlightData(flightdiv, data) {
 
+    console.log(data);
+    var flightdiv2 = $('#flightnum2');
     try {
-        flightdiv.append("<div class=flight1><span class=titleblue>Flight #1:</span>" + data.flight[0].trips.data.carrier[0].name + "</div>");
-        flightdiv.append("<div class=flight1 title>" + data.flight[0].trips.tripOption[0].slice[0].duration  + " minutes</div>");
-        flightdiv.append("<div class=flight1 title>" + data.flight[0].trips.tripOption[0].saleTotal + "</div></br>");
+        for (var i = 0; i<2; i++) {
+            var flight = data.flight[i];
+            var carrier = flight.trips.data.carrier[0].name;
+            var flightnum = flight.trips.tripOption[0].slice[0].segment[0].flight.carrier + flight.trips.tripOption[0].slice[0].segment[0].flight.number;
+            var duration = flight.trips.tripOption[0].slice[0].duration;
+            var departureAirport = flight.trips.data.airport[0].code;
+            var arrivalAirport = flight.trips.data.airport[1].code;
+            var departureTime = (flight.trips.tripOption[0].slice[0].segment[0].leg[0].arrivalTime).slice(11,16);
+            var arrivalTime = (flight.trips.tripOption[0].slice[0].segment[0].leg[0].departureTime).slice(11,16);
+            var totalCost = flight.trips.tripOption[0].saleTotal;
+            var layovers = flight.trips.tripOption[0].slice[0].segment.length - 1;
 
-        flightdiv.append("<div class=flight1><span class=titleblue>Flight #2:</span>" + data.flight[1].trips.data.carrier[0].name + "</div>");
-        flightdiv.append("<div class=flight1 title>" + data.flight[1].trips.tripOption[0].slice[0].duration  + " minutes</div>");
-        flightdiv.append("<div class=flight1 title>" + data.flight[1].trips.tripOption[0].saleTotal + "</div></br>");
+            var currentdiv;
+            i === 0 ? currentdiv = flightdiv : currentdiv = flightdiv2;
+
+            $('#combinedFlight').css('display','inline');
+
+            currentdiv.append("\
+                    <div class='flight1'><span class=titleblue>Flight #" + (i+1) + ":</div>\
+                    <div class='flight1 title'>" + carrier + "</div>\
+                    <div class='flight1 title'>" + flightnum + "</div>\
+                    <div class='flight1 title'>" + duration  + " minutes</div>\
+                    <div class='flight1 title'>Depart: " + departureAirport + " " + departureTime + "</div>\
+                    <div class='flight1 title'>Arrive: " + arrivalAirport + " " + arrivalTime + "</div>\
+                    <div class='flight1 title'>" + totalCost + "</div>\
+                    <div class='flight1 title'>Layovers: " + layovers + "</div>"
+            );
+        }
     }
     catch(err) {
         message = "Unable to find flight. Please try again.";
@@ -74,13 +104,14 @@ function outputFlightData(flightdiv, data) {
 
 }
 
-function outputSiteData(flightdiv, data) {
+function outputSiteData(data) {
 
+    var currentdiv = $('#things');
     try {
-        flightdiv.append("<div class=site1><span class=titleblue>Things to see:</span></div>");
+        currentdiv.append("<div class=site1><span class=titleblue>Things to see:</span></div>");
         for (var i = 0; i < data.site[0].length; i++) {
-            if (i > 10) { break; }
-            flightdiv.append("<div class=site1 title>" + data.site[0][i] + "</div>");
+            if (i > 5) { break; }
+            currentdiv.append("<div class='site1 title'>" + data.site[0][i] + "</div>");
         }
     }
     catch(err) {
@@ -91,10 +122,10 @@ function outputSiteData(flightdiv, data) {
 
 function outputHotelData(flightdiv, data) {
 
+    var currentdiv = $('#hotel');
     try {
-        flightdiv.append("</br><div class=site2><span class=titleblue>Hotel:</span></div>");
-        flightdiv.append("<div class=site2 title>" + data.site[2].results[0].name + "</div>");
-
+        currentdiv.append("<div class=site2><span class=titleblue>Hotel:</span></div>");
+        currentdiv.append("<div class='site2 title'>" + data.site[2].results[0].name + "</div>");
     }
     catch(err) {
         message = "Unable to find hotel details. Please try again.";
@@ -104,11 +135,12 @@ function outputHotelData(flightdiv, data) {
 
 function outputRestaurantData(flightdiv, data) {
 
+    var currentdiv = $('#restaurants');
     try {
-        flightdiv.append("</br><div class=site3><span class=titleblue>Restaurants:</span></div>");
+        currentdiv.append("<div class=site3><span class=titleblue>Restaurants:</span></div>");
         for (var i = 0; i < data.site[2].results.length; i++) {
             if (i > 10) { break; }
-            flightdiv.append("<div class=site3 title>" + data.site[1].results[i].name + "</div>");
+            currentdiv.append("<div class='site3 title'>" + data.site[1].results[i].name + "</div>");
         }
     }
     catch(err) {
@@ -138,6 +170,17 @@ function createAlert(message) {
 // creates message upon error
 
     $('.alert').remove();
-    $('.mdl-card:first-child').append('<div class="alert alert-danger" role="alert">' + message + '</div>');
+    $('#loader').after('</br><div class="alert alert-danger" role="alert">' + message + '</div>');
+
+}
+
+
+function adjustdivheight() {
+
+    var one = $('#restaurants1').height();
+    var two = $('#hotel1').height();
+    var three = $('#blank').height();
+    var remaining_height = parseInt(one - two - three - 32);
+    $('#things1').height(remaining_height);
 
 }
