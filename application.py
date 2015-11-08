@@ -5,10 +5,16 @@ from dateutil import parser
 import requests
 import json
 import instance
+import os
 application = Flask(__name__)
 
-VarKey = instance.returngoogleAPIkey()  # google api key
-apikey = instance.returnairportAPIkey()  # airport api key
+try:
+    VarKey = os.environ['GoogleAPIKey']
+    apikey = os.environ['AirportAPIKey']
+except:
+    VarKey = instance.returngoogleAPIkey()  # google api key
+    apikey = instance.returnairportAPIkey()  # airport api key
+
 
 
 @application.route('/')
