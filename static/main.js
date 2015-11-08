@@ -5,7 +5,11 @@
 $(document).ready(function() {
 
     $('#SubmitButton').click(button);
-
+    document.onkeydown=function(){
+    if(window.event.keyCode=='13'){
+        button();
+    }
+}
 });
 
 function button() {
