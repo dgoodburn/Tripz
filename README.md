@@ -15,8 +15,8 @@ $ pip install -r requirements.txt
 
 in application.py, adjust lines 11-12:
 
-VarKey = instance.returngoogleAPIkey()  # google api key
-apikey = instance.returnairportAPIkey()  # airport api key
+VarKey = XXXX  # google api key
+apikey = XXXX  # airport api key
 
 Enter API keys obtained from:
 
