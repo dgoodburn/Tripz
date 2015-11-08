@@ -11,7 +11,18 @@ $ source Tripz/bin/activate
 $ cd Tripz  
 $ git clone https://github.com/dgoodburn/Tripz.git  
 $ cd tripz  
-$ pip install -r requirements.txt  
+$ pip install -r requirements.txt
+
+in application.py, adjust lines 11-12:
+
+VarKey = instance.returngoogleAPIkey()  # google api key
+apikey = instance.returnairportAPIkey()  # airport api key
+
+Enter API keys obtained from:
+
+Google apikey: https://console.developers.google.com/home/
+Airport apikey: https://www.developer.aero/admin/applications
+
 $ python Tripz.py  
 
 http://localhost:5000/
