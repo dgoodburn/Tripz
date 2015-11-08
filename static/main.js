@@ -12,16 +12,29 @@ function button() {
 
     // remove alert if necessary
     $('.alert').remove();
+    $('#flight2').css('display','none');
+    $('#flight3').css('display','none');
+
+    $('#combined').css('display','none');
+    $('#restaurants1').css('display','none');
+
 
     // retrieve inputs from form
     var origin = $('#origin').val();
     var destination = $('#destination').val();
     var startdate = $('#startdate').val();
     var enddate = $('#enddate').val();
+
     var flightdiv = $('#flight');
+    var flightdiv2 = $('#flightnum2');
 
     // remove any current results if necessary
     flightdiv.empty();
+    flightdiv2.empty();
+    $('#things').empty();
+    $('#hotel').empty();
+    $('#restaurants').empty();
+
     $('#flight2').css('display','none');
 
     // check if all inputs are valid
@@ -49,7 +62,7 @@ function button() {
             $('#SubmitButton').css('display','inline');
 
             // output results on screen
-            outputFlightData(flightdiv, data);
+            outputFlightData(flightdiv, flightdiv2, data);
             outputSiteData(data);
             outputHotelData(flightdiv, data);
             outputRestaurantData(flightdiv, data);
@@ -63,11 +76,9 @@ function button() {
 }
 
 
-function outputFlightData(flightdiv, data) {
+function outputFlightData(flightdiv, flightdiv2, data) {
 
-    console.log(data);
-    var flightdiv2 = $('#flightnum2');
-    try {
+    //try {
         for (var i = 0; i<2; i++) {
             var flight = data.flight[i];
             var carrier = flight.trips.data.carrier[0].name;
@@ -93,11 +104,11 @@ function outputFlightData(flightdiv, data) {
                     <div class='flight1 title'><span class=left>" + totalCost + "</span><span class=right>Layovers: " + layovers  + "</span></div>"
             );
         }
-    }
+    /*}
     catch(err) {
         message = "Unable to find flight. Please try again.";
         createAlert(message);
-    }
+    }*/
 
 }
 
