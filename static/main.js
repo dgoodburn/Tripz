@@ -196,3 +196,5 @@ function adjustdivheight() {
     $('#things1').height(remaining_height);
 
 }
+
+
