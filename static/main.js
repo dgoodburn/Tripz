@@ -170,6 +170,10 @@ function formValidation(origin, destination, startdate, enddate) {
     new Date(startdate).toString() === "Invalid Date" ? message = 'Sorry. Date format is incorrect. "YYYY-MM-DD"' : void(0);
     new Date(enddate).toString() === "Invalid Date" ? message = 'Sorry. Date format is incorrect. "YYYY-MM-DD"' : void(0);
 
+    var today = new Date();
+    new Date(startdate) < today ? message = 'Invalid Departure Date' : void(0);
+    new Date(enddate) < today ? message = 'Invalid Return Date' : void(0);
+
     destination === "" ? message = "Destination not found." : void(0);
     origin === "" ? message = "Origin not found." : void(0);
 
